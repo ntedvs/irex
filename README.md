@@ -13,7 +13,7 @@ $ python src/infer.py "a hex color code like #fff or #a1b2c3"
 uv venv --python 3.12 && source .venv/bin/activate
 uv pip install mlx numpy tokenizers quickjs openai python-dotenv
 
-python src/infer.py "iso date like 2024-01-31"     # one query
+python src/infer.py "iso date like 2024-01-31"      # one query
 python src/infer.py -k 5 "an email address"         # top 5 candidates
 python src/infer.py                                 # interactive
 python src/infer.py --ckpt ckpt/m6 "..."            # larger model
@@ -21,10 +21,10 @@ python src/infer.py --ckpt ckpt/m6 "..."            # larger model
 
 ## Models
 
-| | Params | Size | Config | Test | Bench A | Bench B |
-|---|---|---|---|---|---|---|
-| **`m3l`** (default) | 2.6M | 10 MB | d192, 4 layers, 4 heads | 67.9% | 82.5% | 65% |
-| `m6` | 5.9M | 24 MB | d256, 6 layers, 4 heads | 67.9% | 82.5% | 70% |
+| Model               | Params | Size  | Config                  | Test  | Bench A | Bench B |
+| ------------------- | ------ | ----- | ----------------------- | ----- | ------- | ------- |
+| **`m3l`** (default) | 2.6M   | 10 MB | d192, 4 layers, 4 heads | 67.9% | 82.5%   | 65%     |
+| `m6`                | 5.9M   | 24 MB | d256, 6 layers, 4 heads | 67.9% | 82.5%   | 70%     |
 
 - **Test:** behavioral match on 15,058 held-out pairs. The prediction must accept and reject the same strings as the gold regex. Checked on sampled strings, not a proof of equivalence.
 - **Bench A:** 40 handwritten everyday requests with strings that must and must not match. Partly informed the rule-based data.
@@ -53,19 +53,19 @@ JS regex at an intermediate level: literals, `.`, classes, `\d \w \s \b` and neg
 
 Test numbers are on the final 15k test set unless noted. Earlier runs used smaller data and splits.
 
-| Run | Params | Change | Result |
-|---|---|---|---|
-| byte-level `final` | 10.7M | first full run, 354k pairs | 63.3% (7.6k test) |
-| `d512L8` vs 12M | 28M | batch 256, 12 min | slower to converge per minute |
-| A/B prefix-LM | 12M | bidirectional attention over English | 56.3% vs 56.7% causal, dropped |
-| `big` | 28M | 95 min, 6 passes, 391k pairs | overfit after about 4.6 passes |
-| `big2` | 28M | `big` + 55k pairs, fine-tune | 66.3% |
-| `xl` / `xl2` | 28M | 617k, then 755k pairs, EMA | 66.5% / 67.2% |
-| `m12` | 12M | 755k pairs, 30k steps | 67.9% |
-| `m12c` | 12M | `m12` + rule-based data | 67.9%, Bench B 60% to 70% |
-| `m6` | 5.9M | from scratch with rule-based data | 67.9% |
-| `m3` / `m3l` | 2.6M | 30k / 60k steps | 67.0% / 67.9% |
-| `m1` | 1.4M | 60k steps | 67.1%, Bench A 75% |
+| Run                | Params | Change                               | Result                         |
+| ------------------ | ------ | ------------------------------------ | ------------------------------ |
+| byte-level `final` | 10.7M  | first full run, 354k pairs           | 63.3% (7.6k test)              |
+| `d512L8` vs 12M    | 28M    | batch 256, 12 min                    | slower to converge per minute  |
+| A/B prefix-LM      | 12M    | bidirectional attention over English | 56.3% vs 56.7% causal, dropped |
+| `big`              | 28M    | 95 min, 6 passes, 391k pairs         | overfit after about 4.6 passes |
+| `big2`             | 28M    | `big` + 55k pairs, fine-tune         | 66.3%                          |
+| `xl` / `xl2`       | 28M    | 617k, then 755k pairs, EMA           | 66.5% / 67.2%                  |
+| `m12`              | 12M    | 755k pairs, 30k steps                | 67.9%                          |
+| `m12c`             | 12M    | `m12` + rule-based data              | 67.9%, Bench B 60% to 70%      |
+| `m6`               | 5.9M   | from scratch with rule-based data    | 67.9%                          |
+| `m3` / `m3l`       | 2.6M   | 30k / 60k steps                      | 67.0% / 67.9%                  |
+| `m1`               | 1.4M   | 60k steps                            | 67.1%, Bench A 75%             |
 
 ### Findings
 

@@ -11,7 +11,6 @@ import sys
 from pathlib import Path
 
 import mlx.core as mx
-from mlx.utils import tree_unflatten
 
 import engine
 import grammar
@@ -19,6 +18,8 @@ import tokenizer as tok
 from model import GPT, Config
 
 ROOT = Path(__file__).parents[1]
+HERE = Path(__file__).parent
+DEFAULT = HERE if (HERE / "model.safetensors").exists() else ROOT / "ckpt/best"  # flat release or repo
 NEG = -1e9
 
 
@@ -145,7 +146,7 @@ def best(model, en, k=8, use_hints=True):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("text", nargs="*")
-    ap.add_argument("--ckpt", default=ROOT / "ckpt/best")
+    ap.add_argument("--ckpt", default=DEFAULT)
     ap.add_argument("-k", type=int, default=1, help="show top-k candidates")
     ap.add_argument("--beam", type=int, default=8)
     ap.add_argument("--bits", type=int, default=0, help="quantize linears: 8 or 4")

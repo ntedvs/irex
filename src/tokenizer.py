@@ -14,7 +14,8 @@ from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).parents[1]
-PATH = ROOT / "data/bpe.json"
+HERE = Path(__file__).parent
+PATH = HERE / "bpe.json" if (HERE / "bpe.json").exists() else ROOT / "data/bpe.json"  # flat release or repo
 PAD, SEP, EOS = 0, 1, 2
 OFFSET = 3
 EN = OFFSET + 256
