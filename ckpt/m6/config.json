@@ -1,0 +1,1 @@
+{"vocab": 4355, "dim": 256, "layers": 6, "heads": 4, "ffn_mult": 2.6666666666666665, "max_len": 320, "dropout": 0.1, "rope_base": 10000.0, "compute": "bfloat16", "prefix": false}

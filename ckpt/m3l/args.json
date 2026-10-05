@@ -1,0 +1,1 @@
+{"name": "m3l", "dim": 192, "layers": 4, "heads": 4, "dropout": 0.05, "lr": 0.0025, "wd": 0.1, "bsz": 128, "warmup": 500, "minutes": 20, "steps": 60000, "epochs": 100, "aux": 0.0, "eval_every": 10000, "eval_n": 600, "max_len": 320, "fp32": false, "seed": 0, "prefix": 0, "ema": 0.999, "aug": 1, "init": null}
